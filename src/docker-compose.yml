@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  ping:
+    image: ${DOCKER_REGISTRY-}ping
+    build:
+      context: .
+      dockerfile: Services/Ping/Dockerfile
+    depends_on:
+      - rabbitmq
+
+  pong:
+    image: ${DOCKER_REGISTRY-}pong
+    build:
+      context: .
+      dockerfile: Services/Pong/Dockerfile
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+    - "5672:5672"
+    - "15672:15672"
